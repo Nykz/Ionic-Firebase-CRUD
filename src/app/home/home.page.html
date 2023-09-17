@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="isOpen = true">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Notes App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let item of notes">
+
+      <ion-item-options side="end">
+        <ion-item-option color="secondary" (click)="editNote(item)">EDIT</ion-item-option>
+        <ion-item-option color="danger" (click)="deleteNote(item)">DELETE</ion-item-option>
+      </ion-item-options>
+
+      <ion-item>
+        <ion-label>
+          {{item?.title}}
+          <p>
+            <ion-text class="ion-text-wrap">
+              {{item?.description}}
+            </ion-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-modal [isOpen]="isOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Add A Note</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="save(f)">
+              <ion-icon slot="end" name="checkmark-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+        <form #f="ngForm">
+          
+          <ion-item>
+            <ion-input 
+              label="Title" 
+              labelPlacement="stacked" 
+              type="text" 
+              name="title"
+              placeholder="Enter the title" 
+              [(ngModel)]="model.title"
+              required>
+            </ion-input>
+          </ion-item>
+  
+          <ion-item class="ion-margin-vertical">
+            <ion-textarea 
+              label="Description" 
+              labelPlacement="stacked" 
+              type="text" 
+              name="description"
+              placeholder="Enter the description" 
+              [(ngModel)]="model.description"
+              required>
+            </ion-textarea>
+          </ion-item>
+
+        </form>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+</ion-content>
